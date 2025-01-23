@@ -1,0 +1,70 @@
+{% extends 'Consultancy/Head.html' %}
+{% load static %}
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div style="margin: auto; max-width: 600px;">
+            <table style="width: 100%; border-collapse: collapse; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);">
+                <tr>
+                    <td>Doctor</td>
+                    <td>
+                        <select name="sel_doctor" id="sel_doctor">
+                            <option value="">---select----</option>
+                            {% for i in data %}
+                                <option value="{{i.id}}">{{i.doctor_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Date</td>
+                    <td><input type="date" name="txtdate" id=""></td>
+                </tr>
+                <tr>
+                    <td>From Time</td>
+                    <td><input type="time" name="txttime" id=""></td>
+                </tr>
+                <tr>
+                    <td>To Time</td>
+                    <td><input type="time" name="txtti" id=""></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" value="save" style="background-color: #3498db; color: #fff; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; margin-right: 10px;">
+                        <input type="reset" value="cancel" style="background-color: #3498db; color: #fff; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; margin-right: 10px;">
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <br><br>
+
+        <table style="width: 100%; border-collapse: collapse; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); margin: auto; max-width: 600px;" cellpadding="10">
+            <tr>
+                <td>sl.no</td>
+                <td>Doctor</td>
+                <td>Date</td>
+                <td>FromTime</td>
+                <td>ToTime</td>
+                <td>Action</td>
+            </tr>
+            {% for i in adata %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{i.Doctor.doctor_name}}</td>
+                    <td>{{i.available_date}}</td>
+                    <td>{{i.available_formtime}}</td>
+                    <td>{{i.available_totime}}</td>
+                    
+                    <td>
+                        <a href="{% url 'webConsultancy:del_availabledoctor' i.id %}">delete</a>
+                        <a href="{% url 'webConsultancy:Slots' i.id %}">addslot</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </form>
+{% endblock %}
+
+

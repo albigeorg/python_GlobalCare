@@ -1,0 +1,148 @@
+{% extends 'Hospital/Head.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add doctor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select,
+        input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"],
+        input[type="reset"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover,
+        input[type="reset"]:hover {
+            background-color: #2980b9;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="txtname">Name</label>
+        <input type="text" name="txtname" id="txtname" title="Name Allows Only Alphabets, Spaces and First Letter Must Be Capital Letter" pattern="^[A-Z]+[a-zA-Z ]*$"  autocomplete="off" required>
+
+        <label for="txtadd">Address</label>
+        <input type="text" name="txtadd" id="txtadd" autocomplete="off" required>
+
+        <label for="txtcon">Contact</label>
+        <input type="text" name="txtcon" id="txtcon" pattern="[6-9]{1}[0-9]{9}" title="Phone number with 6-9 and remaining 9 digits with 0-9" autocomplete="off" required>
+
+        <label>Gender</label>
+        <input type="radio" name="txtgen" value="Male">Male
+        <input type="radio" name="txtgen" value="Female">Female
+
+        <label for="txtemail">Email</label>
+        <input type="email" name="txtemail" id="txtemail" required>
+
+        <label for="sel_department">Department</label>
+        <select name="sel_department" id="sel_department" required>
+            <option value="">---select----</option>
+            {% for i in dep %}
+                <option value="{{i.id}}">{{i.Department}}</option>
+            {% endfor %}
+        </select>
+
+        <label for="filepic">Photo</label>
+        <input type="file" name="filepic" required>
+
+        <label for="filepro">Proof</label>
+        <input type="file" name="filepro" required>
+
+        <label for="txtpass">Password</label>
+        <input type="text" name="txtpass" id="txtpass" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" autocomplete="off" required>
+
+        <div>
+            <input type="submit" value="Save">
+            <input type="reset" value="Cancel">
+        </div>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>sl.no</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Gender</th>
+                <th>Department</th>
+                <th>Photo</th>
+                <th>Proof</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in adata %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{i.doctor_name}}</td>
+                    <td>{{i.doctor_address}}</td>
+                    <td>{{i.doctor_email}}</td>
+                    <td>{{i.doctor_Contact}}</td>
+                    <td>{{i.doctor_gender}}</td>
+                    <td>{{i.Department.Department}}</td>
+                    <td><img src="{{ i.doctor_photo.url }}" alt="Photo" width="50" height="50"></td>
+                    <td><a href="{{ i.doctor_proof.url }}" alt="Proof" download>View</a></td>
+                    <td><a href="{% url 'whospital:del_adddoctor' i.id %}" class="action-link">Delete</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+{% endblock content %}
+

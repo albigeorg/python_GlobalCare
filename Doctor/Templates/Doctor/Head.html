@@ -1,0 +1,116 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>DOCTOR HOME</title>
+
+        <!-- CSS FILES -->        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+        <link href="{% static 'Doctor/css/bootstrap.min.css' %}" rel="stylesheet">
+
+        <link href="{% static 'Doctor/css/bootstrap-icons.css' %}" rel="stylesheet">
+
+        <link href="{% static 'Doctor/css/owl.carousel.min.css' %}" rel="stylesheet">
+
+        <link href="{% static 'Doctor/css/owl.theme.default.min.css' %}" rel="stylesheet">
+
+        <link href="{% static 'Doctor/css/templatemo-medic-care.css' %}" rel="stylesheet">
+<!--
+
+TemplateMo 566 Medic Care
+
+https://templatemo.com/tm-566-medic-care
+
+-->
+    </head>
+    
+    <body id="top">
+    
+        <main>
+
+            <nav class="navbar navbar-expand-lg bg-light fixed-top shadow-lg">
+                <div class="container">
+                    <a class="navbar-brand mx-auto d-lg-none" href="#">
+                        Medic Care
+                        <strong class="d-block">Health Specialist</strong>
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mx-auto">
+                            <a class="navbar-brand d-none d-lg-block" href="#">Global Care<strong class="d-block">Health Specialist</strong></a>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{% url 'webDoctor:Viewappointment' %}">Viewappointment</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'webDoctor:Consulted' %}">Consulted Appointments</a>
+                            </li>
+                            
+                            <!-- <li class="nav-item">
+                                <a class="nav-link" href="#booking">Booking</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#contact">Contact</a>
+                            </li> -->
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Profile</a>
+                                <div class="dropdown-menu m-0">
+                                    <a href="{% url 'webDoctor:Myprofile' %}" class="dropdown-item">Myprofile</a>
+                                    <a href="{% url 'webDoctor:Editprofile' %}" class="dropdown-item">Editprofile</a>
+                                    <a href="{% url 'webDoctor:Changepassword' %}" class="dropdown-item">Changepassword</a>
+                                </div>
+                            </div>
+
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">F&Q</a>
+                                <div class="dropdown-menu m-0">
+                                    <a href="{% url 'webDoctor:Complaint' %}" class="dropdown-item">Complaint</a>
+                                    <a href="{% url 'webDoctor:feedback' %}" class="dropdown-item">feedback</a>
+                                </div>
+                            </div>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'webguest:Login' %}">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </nav>
+
+            {% block content %}
+
+            {% endblock content %}
+            
+    
+            <!-- JAVASCRIPT FILES -->
+            <script src="{% static 'Doctor/js/jquery.min.js' %}"></script>
+            <script src="{% static 'Doctor/js/bootstrap.bundle.min.js' %}"></script>
+            <script src="{% static 'Doctor/js/owl.carousel.min.js' %}"></script>
+            <script src="{% static 'Doctor/js/scrollspy.min.js' %}"></script>
+            <script src="{% static 'Doctor/js/custom.js' %}"></script>
+    <!--
+    
+    TemplateMo 566 Medic Care
+    
+    https://templatemo.com/tm-566-medic-care
+    
+    -->
+        </body>
+    </html>

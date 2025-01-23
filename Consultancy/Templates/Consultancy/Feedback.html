@@ -1,0 +1,112 @@
+{% extends 'Consultancy/Head.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"], input[type="reset"] {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        input[type="submit"]:hover, input[type="reset"]:hover {
+            background-color: #2980b9;
+        }
+
+        table.center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div>
+            <table border="1" class="center">
+                <tr>
+                    <td>Feedback</td>
+                    <td><textarea name="txtfeed" cols="30" rows="10" pattern="[A-Za-z. ]{3,}" autocomplete="off" required>{{ adata.feedback_title }}</textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" value="save">
+                        <input type="reset" value="cancel">
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <table border="1" class="center" cellpadding="10">
+            <tr>
+                <td>sl.no</td>
+                <td>Feedback</td>
+                <td>Date</td>
+                <td>Action</td>
+            </tr>
+            {% for i in cdata %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.feedback_title }}</td>
+                    <td>{{ i.feedback_date }}</td>
+                    <td>
+                        <a href="{% url 'webConsultancy:delf' i.id %}">Delete</a>
+                        <a href="{% url 'webConsultancy:edtf' i.id %}">Edit</a>
+                        </td>
+                </tr>
+                </table>
+                {% endblock content %}
+

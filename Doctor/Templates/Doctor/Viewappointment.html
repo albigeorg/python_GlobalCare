@@ -1,0 +1,42 @@
+{% extends 'Doctor/Head.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>viewappointment</title>
+</head>
+<body>
+    <br><br>
+    <h3 align="center">Appointments</h3>
+    <form action="" method="post">
+        <table border="1" align="center">
+            <tr>
+                <th>sl.no</th>
+                <th>SlotNo</th>
+                <th>Date</th>
+                <th>Name of User</th>
+                <th>Contact</th>
+                <th>action</th>
+            </tr>
+            <br><br>
+        {% for i in adata %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{ i.slot.slots}}</td>
+                <td>{{ i.appointment_date }}</td>
+                <td>{{ i.user.user_name}}</td>
+                <td>{{ i.user.user_contact }}</td>
+                <td colspan="2" align="center">
+                    <a href="{% url 'webDoctor:Consuttedappointment' i.id %}">Consultted</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+</body>
+</html>
+<br><br><br>
+{% endblock content %}

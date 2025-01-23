@@ -1,0 +1,92 @@
+{% extends 'Consultancy/Head.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>acceptedappointment</title>
+    <style>
+        /* body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        } */
+
+        form {
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        /* a {
+            text-decoration: none;
+            color: #e74c3c;
+            padding: 6px 10px;
+            border: 1px solid #e74c3c;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #c0392b;
+            color: #fff;
+        } */
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div>
+            <table border="1">
+                <tr>
+                    <th>sl.no</th>
+                    <th>SlotNo</th>
+                    <th>Date</th>
+                    <th>Username</th>
+                    <th>Contact No</th>
+                    <th>Doctorname</th>
+                    <th>Action</th>
+                </tr>
+                
+                {% for i in data %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{ i.slot.slots }}</td>
+                    <td>{{ i.appointment_date }}</td>
+                    <td>{{ i.user.user_name }}</td>
+                    <td>{{ i.user.user_contact }}</td>
+                    <td>{{ i.slot.available.Doctor.doctor_name }}</td>     
+                    <td>
+                        <a href="{% url 'webConsultancy:rej_Viewappointment' i.id %}">Reject</a>
+                    </td>   
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </form>
+</body>
+</html>
+{% endblock content %}

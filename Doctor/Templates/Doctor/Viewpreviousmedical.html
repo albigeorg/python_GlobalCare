@@ -1,0 +1,80 @@
+{% extends 'Doctor/Head.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Records</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #0056b3;
+        }
+        h3 {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h3>Medical Report</h3>
+    <table border="1" align="center">
+        <tr>
+            <th>Sl. No</th>
+            <th>Medical Report</th>
+            <th>Medical Condition Major</th>
+        </tr>
+        {% for report in medical %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td><a href="{{ report.updatemedicine_report.url }}" download>View</a></td>
+            <td>{{ report.updatemedicine_major }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h3>Medicine Prescription</h3>
+    <table border="1" align="center">
+        <tr>
+            <th>Sl. No</th>
+            <th>Medicine</th>
+            <th>Diet</th>
+        </tr>
+        {% for prescription in prescribtion %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ prescription.prescribtion_medicine }}</td>
+            <td>{{ prescription.prescribtion_diet }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+{% endblock content %}

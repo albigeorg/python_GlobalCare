@@ -1,0 +1,70 @@
+{% extends 'User/Head.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        table {
+            width: 50%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table td {
+            padding: 10px;
+        }
+        img {
+            display: block;
+            margin: 0 auto;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <br><br><br>
+    <form action="" method="post">
+        <table border="0" align="center">
+            <tr>
+                <td align="center" colspan="2"><img src="{{user.user_photo.url}}" width="150" height="150"></td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>{{user.user_name}}</td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+                <td>{{user.user_contact}}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{user.user_email}}</td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>{{user.user_address}}</td>
+            </tr>
+            <tr>
+                <td>District</td>
+                <td>{{user.place.district.district_name}}</td>
+            </tr>
+            <tr>
+                <td>Place</td>
+                <td>{{user.place.place_name}}</td>
+            </tr>
+        </table>
+    </form>    
+</body>
+</html>
+<br><br>
+{% endblock content %}

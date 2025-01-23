@@ -1,0 +1,187 @@
+{% extends 'User/Head.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Hospital</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        form {
+            width: 50%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table td, table th {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #Result {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 80%;
+            margin: 0 auto;
+        }
+        #Result table {
+            width: calc(50% - 20px);
+            margin-bottom: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #Result table td, #Result table th {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        #Result table img {
+            display: block;
+            margin: 0 auto;
+            border-radius: 50%;
+        }
+        #Result table a {
+            display: block;
+            text-align: center;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        #Result table a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <br><br><br>
+    <h3 align="center">Search Hospital  </h3>
+    <form action="" method="post">
+        <table border="0" align="center" id="Hosp" data-places-url="{% url 'webguest:ajax_place' %}" data-search-url="{% url 'webuser:ajax_Hospital' %}">
+            <tr>
+                <td>District</td>
+                <td>
+                    <select name="sel_district" id="sel_district">
+                        <option value="">---select----</option>
+                        {% for i in data %}
+                        <option value="{{i.id}}">{{i.district_name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Place</td>
+                <td>
+                    <select name="sel_place" id="sel_place" onchange="searchhsptl()">
+                        <option value="">---select----</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Hospital Type</td>
+                <td>
+                    <select name="sel_Hospital" id="sel_Hospital" onchange="searchhsptl()">
+                        <option value="">----select----</option>
+                        {% for i in adata %}
+                        <option value="{{i.id}}">{{i.Hospitaltype}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <div id="Result">
+        {% for i in hdata %}
+            <table border="0">
+                <tr>
+                    <td align="center" colspan="2"><img src="{{i.hospital_logo.url}}" width="150" height="150"></td>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td>{{i.hospital_name}}</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>{{i.hospital_email}}</td>
+                </tr>
+                <tr>
+                    <td>Contact</td>
+                    <td>{{i.hospital_contact}}</td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td>{{i.hospital_address}}</td>
+                </tr>
+                <tr>
+                    <td>Hospital Type</td>
+                    <td>{{i.hospitaltype.Hospitaltype}}</td>
+                </tr>
+                <tr>
+                    <td>District</td>
+                    <td>{{i.place.district.district_name}}</td>
+                </tr>
+                <tr>
+                    <td>Place</td>
+                    <td>{{i.place.place_name}}</td>
+                </tr>
+                <td colspan="2" align="center">
+                    <a href="{% url 'webuser:SearchDoctor' i.id %}">View Doctor</a>
+                </td>
+            </table>
+        {% endfor %}
+    </div>
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#sel_district").change(function () {
+        var did = $(this).val();
+        var ur = $('#Hosp').attr("data-places-url");
+        $.ajax({
+            url: ur,
+            data: { DIST: did },
+            success: function (data) {
+                $("#sel_place").html(data);
+                console.log(data);
+            },
+        });
+    });
+
+    function searchhsptl() {
+        var pid = document.getElementById("sel_place").value;
+        var hid = document.getElementById("sel_Hospital").value;
+        var ur = $("#Hosp").attr("data-search-url");
+        $.ajax({
+            url: ur,
+            data: { pid: pid, hid: hid },
+            success: function (data) {
+                $("#Result").html(data);
+            },
+        });
+    }
+</script>
+{% endblock content %}

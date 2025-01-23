@@ -1,0 +1,89 @@
+{% extends 'User/Head.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viewbooking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        a.btn {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        a.btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <br><br>
+    <h3 align="center">View My Appointment</h3>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table border="0" align="center" cellpadding="10">
+            <tr>
+                <th>sl.no</th>
+                <th>Slot No</th>
+                <th>Date</th>
+                <th>Name Of Hospital</th>
+                <th>Contact info</th>
+                <th>Doctor Name</th>
+                <th>Status</th>
+            </tr>
+            {% for i in data %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.slot.slots }}</td>
+                <td>{{ i.appointment_date }}</td>
+                <td>{{ i.user.user_name }}</td>
+                <td>{{ i.user.user_contact }}</td>
+                <td>{{ i.slot.available.Doctor.doctor_name }}</td>
+                <td>
+                    {% if i.appointment_status == '0' %}
+                        Not confirmed
+                    {% elif i.appointment_status == '1' %}
+                        Appointment confirmed
+                    {% elif i.appointment_status == '3' %}
+                        Consulted |
+                        <a href="{% url 'webuser:Viewmedicalreport' i.id %}" class="btn">Medical Report</a>|&nbsp;
+                        <a href="{% url 'webuser:Viewprescribtion' i.id %}" class="btn">Medicine Prescription</a>
+                    {% else %}
+                        Rejected
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+</body>
+</html>
+{% endblock content %}

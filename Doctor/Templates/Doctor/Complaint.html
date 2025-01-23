@@ -1,0 +1,163 @@
+{% extends 'Doctor/Head.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint</title>
+    <style>
+        .main-div {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: max-content;
+            margin: auto;
+            margin-top: 30px;
+        }
+
+        
+        .form-container textarea {
+            width: calc(100% - 10px); /* Adjusted width for padding */
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-container input[type="submit"],
+        .form-container input[type="reset"] {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-container input[type="submit"]:hover,
+        .form-container input[type="reset"]:hover {
+            background-color: #45a049;
+        }
+
+        .table-container {
+            margin-top: 20px;
+            overflow-x: auto; /* Add this line to enable horizontal scrolling if needed */
+        }
+
+        .table-container table {
+            width: max-content;
+            border-collapse: collapse;
+            margin-top: 10px;
+            table-layout: fixed; /* Added to ensure fixed layout */
+        }
+
+        .table-container th,
+        .table-container td {
+            padding: 12px;
+            text-align: center; /* Align text to center */
+            border-bottom: 1px solid #ddd;
+            word-wrap: break-word; /* Added for text wrapping */
+        }
+
+        .table-container th {
+            background-color: #f2f2f2;
+        }
+
+        .action-links {
+            color: #ff0000;
+            text-decoration: none;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .action-links:hover {
+            text-decoration: underline;
+        }
+        .text-box {
+            padding: 10px 5px;
+            margin-top: 5px;
+            width: 96%;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .btn-pos {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-div">
+    <div class="form-container">
+        <form action="" method="post">
+            {% csrf_token %}
+            <div>
+                <label for="txttitle">Title</label>
+                <input type="text" name="txttitle" class="text-box" id="" value="{{ datac.complaint_title }}" pattern="[A-Za-z. ]{3,}" autocomplete="off" required>
+            </div>
+            <div>
+                <label for="txtcom">Complaint</label>
+                <textarea name="txtcom" id="" cols="30" rows="10" pattern="[A-Za-z. ]{3,}" autocomplete="off" required>{{ datac.complaint_com }}</textarea>
+            </div>
+            <div class="btn-pos">
+                <input type="submit" value="Send">
+                <input type="reset" value="Cancel">
+            </div>
+        </form>
+    </div>
+    <div class="form-container">
+    <div class="table-container">
+        <table border="1">
+            <tr>
+                <th>sl.no</th>
+                <th>Title</th>
+                <th>Complaint</th>
+                <th>Date</th>
+                <th>Reply</th>
+                <th>Action</th>
+            </tr>
+            {% for i in data %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.complaint_title }}</td>
+                    <td>{{ i.complaint_com }}</td>
+                    <td>{{ i.complaint_date }}</td>
+                    <td>{{ i.complaint_reply }}</td>
+                    <td>
+                        <a href="{% url 'webDoctor:dele' i.id %}" class="action-links">Delete</a>
+                        <a href="{% url 'webDoctor:edit' i.id %}" class="action-links">Edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+</div>
+</body>
+</html>
+{% endblock content %}
+

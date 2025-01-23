@@ -1,0 +1,133 @@
+{% extends 'Hospital/Head.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        form {
+            width:  max-content;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: max-content;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        td a {
+            display: inline-block;
+            margin: 2px;
+            padding: 5px 10px;
+            text-decoration: none;
+            background-color: #3498db;
+            color: #fff;
+            border-radius: 5px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            border-radius: 4px;
+        }
+
+        input[type="submit"],
+        input[type="reset"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover,
+        input[type="reset"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div>
+            <label for="txttitle">Title</label>
+            <input type="text" name="txttitle" id="txttitle" value="{{ datac.complaint_title }}" pattern="[A-Za-z. ]{3,}" autocomplete="off" required>
+        </div>
+        <div>
+            <label for="txtcom">Complaint</label>
+            <textarea name="txtcom" id="txtcom" cols="30" rows="10" pattern="[A-Za-z. ]{3,}" autocomplete="off" required>{{ datac.complaint_com }}</textarea>
+        </div>
+        <div align="center">
+            <input type="submit" value="Send">
+            <input type="reset" value="Cancel">
+        </div>
+    </form>
+
+    <table border="1" align="center" cellpadding="10">
+        <tr>
+            <th>sl.no</th>
+            <th>Title</th>
+            <th>Complaint</th>
+            <th>Date</th>
+            <th>Reply</th>
+            <th>Action</th>
+        </tr>
+        {% for i in data %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.complaint_title }}</td>
+            <td>{{ i.complaint_com }}</td>
+            <td>{{ i.complaint_date }}</td>
+            <td>{% if i.complaint_status == '0' %}
+                Not Replied
+                 {% else %}
+                 {{i.complaint_reply}}
+                 {% endif %}</td>
+            <td>
+                <a href="{% url 'whospital:delc' i.id %}">Delete</a>
+                <a href="{% url 'whospital:edtc' i.id %}">Edit</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+{% endblock content %}
+
+

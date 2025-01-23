@@ -1,0 +1,102 @@
+{% extends 'Consultancy/Head.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Appointment</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 800px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        td a {
+            text-decoration: none;
+            padding: 8px 12px;
+            margin-right: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            color: #fff;
+        }
+
+        td a.accept {
+            background-color: #2ecc71;
+        }
+
+        td a.reject {
+            background-color: #e74c3c;
+        }
+
+        td a:hover {
+            background-color: #34495e;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        <div>
+            <table border="1">
+                <tr>
+                    <th>sl.no</th>
+                    <th>SlotNo</th>
+                    <th>Date</th>
+                    <th>Name of User</th>
+                    <th>Contact</th>
+                    <th>Doctor Name</th>
+                    <th>Action</th>
+                </tr>
+                {% for i in adata %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{ i.slot.slots}}</td>
+                        <td>{{ i.appointment_date }}</td>
+                        <td>{{ i.user.user_name}}</td>
+                        <td>{{ i.user.user_contact }}</td>
+                        <td>{{ i.slot.available.Doctor.doctor_name }}</td>
+                        <td>
+                            <a href="{% url 'webConsultancy:acc_Viewappointment' i.id %}" class="accept">Accept</a>
+                            <a href="{% url 'webConsultancy:rej_Viewappointment' i.id %}" class="reject">Reject</a>
+                        </td>   
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </form>
+</body>
+</html>
+{% endblock content %}

@@ -1,0 +1,88 @@
+{% extends 'Hospital/Head.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        td:first-child {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        <div align="center">
+            <img src="{{hospital.hospital_logo.url}}" alt="Hospital Logo" width="150" height="150">
+        </div>
+        <table>
+            <tr>
+                <td>Name</td>
+                <td>{{hospital.hospital_name}}</td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+                <td>{{hospital.hospital_contact}}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{hospital.hospital_email}}</td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>{{hospital.hospital_address}}</td>
+            </tr>
+            <tr>
+                <td>District</td>
+                <td>{{hospital.place.district.district_name}}</td>
+            </tr>
+            <tr>
+                <td>Place</td>
+                <td>{{hospital.place.place_name}}</td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
+{% endblock content %}

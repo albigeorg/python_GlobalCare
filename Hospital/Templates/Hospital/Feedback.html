@@ -1,0 +1,27 @@
+{% extends 'Hospital/Head.html' %}
+{% load static %}
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div style="margin: auto; max-width: 400px;">
+            <table style="width: 100%; border-collapse: collapse; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);">
+                <tr>
+                    <td style="padding: 12px; text-align: left;">Feedback</td>
+                    <td style="padding: 12px; text-align: left;">
+                        <textarea name="txtfeed" cols="30" rows="10" pattern="[A-Za-z. ]{3,}" autocomplete="off" required>{{ adata.feedback_title }}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;">
+                        <input type="submit" value="Save" style="width: 48%; background-color: #3498db; color: #fff; padding: 10px; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">
+                        <input type="reset" value="Cancel" style="width: 48%; background-color: #3498db; color: #fff; padding: 10px; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+{% endblock %}
+
+
+

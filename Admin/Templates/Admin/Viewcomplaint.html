@@ -1,0 +1,184 @@
+{% extends 'Admin/Head.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viewcomplaint</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form {
+            width: 80%;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        h3 {
+            margin-top: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+            padding: 6px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #2980b9;
+            color: #fff;
+        }
+
+        .reply-link {
+            background-color: #2ecc71;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        <h3>User Complaint</h3>
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th>sl.no</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Date</th>
+                <th>Username</th>
+                <th>Action</th>
+            </tr>
+            {% for i in user %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{ i.complaint_title }}</td>
+                    <td>{{ i.complaint_com }}</td>
+                    <td>{{ i.complaint_date }}</td>
+                    <td>{{ i.user.user_name }}</td>
+                    <td>
+                        {% if i.complaint_status == '0' %}
+                            <a href="{% url 'webadmin:Reply' i.id %}" class="reply-link">Reply</a>
+                        {% else %}
+                            {{i.complaint_reply}}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h3>Hospital Complaint</h3>
+        <table>
+            <tr>
+                <th>sl.no</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Date</th>
+                <th>Hospital</th>
+                <th>Action</th>
+            </tr>
+            {% for i in hos %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{ i.complaint_title }}</td>
+                    <td>{{ i.complaint_com }}</td>
+                    <td>{{ i.complaint_date }}</td>
+                    <td>{{ i.hospital.hospital_name }}</td>
+                    <td>
+                        {% if i.complaint_status == '0' %}
+                            <a href="{% url 'webadmin:Reply' i.id %}" class="reply-link">Reply</a>
+                        {% else %}
+                            {{i.complaint_reply}}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h3>Consultancy Complaint</h3>
+        <table>
+            <tr>
+                <th>sl.no</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Date</th>
+                <th>Consultancy</th>
+                <th>Action</th>
+            </tr>
+            {% for i in con %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{ i.complaint_title }}</td>
+                    <td>{{ i.complaint_com }}</td>
+                    <td>{{ i.complaint_date }}</td>
+                    <td>{{ i.consultancy.consultancy_name }}</td>
+                    <td>
+                        {% if i.complaint_status == '0' %}
+                            <a href="{% url 'webadmin:Reply' i.id %}" class="reply-link">Reply</a>
+                        {% else %}
+                            {{i.complaint_reply}}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h3>Doctor Complaint</h3>
+        <table>
+            <tr>
+                <th>sl.no</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Date</th>
+                <th>Doctor</th>
+                <th>Action</th>
+            </tr>
+            {% for i in doc %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{ i.complaint_title }}</td>
+                    <td>{{ i.complaint_com }}</td>
+                    <td>{{ i.complaint_date }}</td>
+                    <td>{{ i.doctor.doctor_name }}</td>
+                    <td>
+                        {% if i.complaint_status == '0' %}
+                            <a href="{% url 'webadmin:Reply' i.id %}" class="reply-link">Reply</a>
+                        {% else %}
+                            {{i.complaint_reply}}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </form>
+</body>
+</html>
+{% endblock content %}
+

@@ -1,0 +1,39 @@
+{% for i in hospital %}
+        <table >
+            <tr>
+                <td align="center" colspan="2"><img src="{{i.hospital_logo.url}}" width="150" height="150"></td>
+                
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>{{i.hospital_name}}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{i.hospital_email}}</td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+                <td>{{i.hospital_contact}}</td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>{{i.hospital_address}}</td>
+            </tr>
+            <tr>
+                <td>HospitalType</td>
+                <td>{{i.hospitaltype.Hospitaltype}}</td>
+            </tr>
+            <tr>
+                <td>District</td>
+                <td>{{i.place.district.district_name}}</td>
+            </tr>
+            <tr>
+                <td>Place</td>
+                <td>{{i.place.place_name}}</td>
+            </tr>
+            <td colspan="2" align="center">
+                <a href="{% url 'webuser:SearchDoctor' i.id %}">Viewdoctor</a>
+            </td>
+        </table>
+        {% endfor %}

@@ -1,0 +1,135 @@
+{% extends 'Guest/Head.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        form {
+            width: 50%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+        }
+        table td {
+            padding: 10px;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="file"],
+        select {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"],
+        input[type="reset"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover,
+        input[type="reset"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h3 align="center">User Registration</h3>
+    <form action="" method="post"  id="UserForm" data-places-url="{% url 'webguest:ajax_place' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table border="0">
+            <tr>
+                <td>Name</td>
+                <td><input type="text" name="txtname" title="Name Allows Only Alphabets,Spaces and First Letter Must Be Capital Letter" pattern="^[A-Z]+[a-zA-Z ]*$" autocomplete="off" required></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input type="email" name="txtemail" autocomplete="off" required ></td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+                <td><input type="text" name="txtcon" pattern="[6-9]{1}[0-9]{9}" 
+                    title="Phone number with 6-9 and remaing 9 digit with 0-9" autocomplete="off" required></td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td><input type="text" name="txtadd"  autocomplete="off" required></td>
+            </tr>
+            <tr>
+                <td>Gender</td>
+                <td>
+                    <input type="radio" name="txtgen"  value="Male">Male
+                    <input type="radio" name="txtgen"  value="Female">Female
+                </td>
+            </tr>
+            <tr>
+                <td>District</td>
+                <td><select name="sel_district" id="sel_district" required>
+                    <option value="">---select----</option>
+                    {% for i in data %}
+                    <option value="{{i.id}}">{{i.district_name}}</option>
+                    {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Place</td>
+                <td><select name="sel_place" id="sel_place" required>
+                    <option value="">---select----</option>
+                  </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Photo</td>
+                <td><input type="file" name="filepic"required ></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><input type="password" name="txtpass" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="save">
+                    <input type="reset" value="cancel">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#sel_district").change(function () {
+        var did = $(this).val();
+        var ur = "{% url 'webguest:ajax_place' %}"
+        $.ajax({
+            url: ur,
+            data: { DIST: did, },
+            success: function (data) {
+                $("#sel_place").html(data);
+                console.log(data);
+            },
+        });
+    });
+</script>
+{% endblock content %}

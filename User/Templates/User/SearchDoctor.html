@@ -1,0 +1,147 @@
+{% extends 'User/Head.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SearchDoctor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        form {
+            width: 80%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table td, table th {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #Result {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 0 -10px; /* Add negative margin to counteract the padding */
+        }
+        #Result table {
+            width: calc(25% - 20px); /* Adjust the width of each card */
+            margin-bottom: 20px;
+            padding: 10px; /* Add padding to each card */
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box; /* Ensure padding is included in width calculation */
+        }
+        #Result table td,
+        #Result table th {
+            padding: 10px;
+            border: none;
+        }
+        #Result table img {
+            display: block;
+            margin: 0 auto;
+            border-radius: 50%;
+        }
+        #Result table a {
+            display: block;
+            text-align: center;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        #Result table a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <br><br>
+    <h3 align="center">Search Doctor </h3>
+    <form action="" method="post" id="depart"  data-search-url="{% url 'webuser:ajax_Department' %}" enctype="multipart/form-data">
+        <table border="0" align="center">
+            <tr>
+                <td>Department</td>
+                <td>
+                    <select name="sel_department" id="sel_department">
+                        <option  value="">---select----</option>
+                        {% for i in dep %}
+                        <option  value="{{i.id}}">{{i.Department}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <br><br><br>
+        <div id="Result">
+            {% for i in adata %}
+            <table border="0" align="center">
+                <tr>
+                    <td align="center" colspan="2"><img src="{{i.doctor_photo.url}}" width="150" height="150"></td>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td>{{i.doctor_name}}</td>
+                </tr>
+                <tr>
+                    <td>Contact</td>
+                    <td>{{i.doctor_Contact}}</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>{{i.doctor_email}}</td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td>{{i.doctor_address}}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <a href="{% url 'webuser:ViewAvailable' i.id %}">View Available</a>
+                    </td>
+                </tr>
+            </table>
+            {% endfor %}
+        </div>
+    </form>
+</body>
+</html>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#sel_department").change(function () {
+        var did = $(this).val();
+        var ur = $('#depart').attr("data-search-url");
+        $.ajax({
+            url: ur,
+            data: { dep: did },
+            success: function (data) {
+                $("#Result").html(data);
+                console.log(data);
+            },
+        });
+    });
+</script>
+{% endblock content %}

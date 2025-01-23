@@ -1,0 +1,82 @@
+{% extends 'Hospital/Head.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"],
+        input[type="reset"] {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        input[type="submit"]:hover,
+        input[type="reset"]:hover {
+            background-color: #45a049;
+        }
+
+        .center-align {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <h2 style="text-align: center;">Edit Profile</h2>
+        <label for="txtname">Name:</label>
+        <input type="text" name="txtname" id="txtname" value="{{hospital.hospital_name}}" pattern="^[A-Z][a-zA-Z ]*$" title="Name allows only alphabets, spaces, and the first letter must be capital" autocomplete="off" required>
+
+        <label for="txtcon">Contact:</label>
+        <input type="tel" name="txtcon" id="txtcon" value="{{hospital.hospital_contact}}" pattern="[6-9][0-9]{9}" title="Phone number with 6-9 and remaining 9 digits with 0-9" autocomplete="off" required>
+
+        <label for="txtemail">Email:</label>
+        <input type="email" name="txtemail" id="txtemail" value="{{hospital.hospital_email}}" autocomplete="off" required>
+
+        <label for="txtadd">Address:</label>
+        <textarea name="txtadd" id="txtadd" required>{{hospital.hospital_address}}</textarea>
+
+        <div class="center-align">
+            <input type="submit" name="txtup" value="Update">
+            <input type="reset" name="txtcan" value="Cancel">
+        </div>
+    </form>
+</body>
+</html>
+{% endblock content %}

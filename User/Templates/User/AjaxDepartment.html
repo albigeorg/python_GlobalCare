@@ -1,0 +1,28 @@
+{% for i in depart %}
+        <table  >
+            <tr>
+                <td align="center" colspan="2"><img src="{{i.doctor_photo.url}}" width="150" height="150"></td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>{{i.doctor_name}}</td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+                <td>{{i.doctor_Contact}}</td>
+             </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{i.doctor_email}}</td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>{{i.doctor_address}}</td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <a href="{% url 'webuser:ViewAvailable' i.id %}">ViewAvailable</a>
+                </td>
+            </tr>
+        </table>
+        {% endfor %}

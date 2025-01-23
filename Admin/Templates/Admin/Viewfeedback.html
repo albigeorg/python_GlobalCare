@@ -1,0 +1,131 @@
+{% extends 'Admin/Head.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viewfeedback</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        h3 {
+            margin-bottom: 10px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        <h3>User feedback</h3>
+        {% csrf_token %}
+        <table border="1">
+            <tr>
+                <th>sl.no</th>
+                <th>Content</th>
+                <th>Date</th>
+                <th>Username</th>
+            </tr>
+            {% for i in user %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{ i.feedback_title }}</td>
+                    <td>{{ i.feedback_date }}</td>
+                    <td>{{ i.user.user_name }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br><br>
+
+        <h3>Hospital feedback</h3>
+        <table border="1">
+            <tr>
+                <th>sl.no</th>
+                <th>Content</th>
+                <th>Date</th>
+                <th>Hospital</th>
+            </tr>
+            {% for i in hos %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{ i.feedback_title }}</td>
+                    <td>{{ i.feedback_date }}</td>
+                    <td>{{ i.hospital.hospital_name }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br><br>
+
+        <h3>Consultancy feedback</h3>
+        <table border="1">
+            <tr>
+                <th>sl.no</th>
+                <th>Content</th>
+                <th>Date</th>
+                <th>Consultancy</th>
+            </tr>
+            {% for i in con %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{ i.feedback_title }}</td>
+                    <td>{{ i.feedback_date }}</td>
+                    <td>{{ i.consultancy.consultancy_name }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br><br>
+
+        <h3>Doctor feedback</h3>
+        <table border="1">
+            <tr>
+                <th>sl.no</th>
+                <th>Content</th>
+                <th>Date</th>
+                <th>Doctor</th>
+            </tr>
+            {% for i in doc %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{ i.feedback_title }}</td>
+                    <td>{{ i.feedback_date }}</td>
+                    <td>{{ i.doctor.doctor_name }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br><br>
+    </form>
+</body>
+</html>
+{% endblock content %}
+

@@ -1,0 +1,103 @@
+{% extends 'Doctor/Head.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 400px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        input, textarea {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-top: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"], input[type="reset"] {
+            width: 48%;
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover, input[type="reset"]:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div>
+            <table border="1">
+                <tr>
+                    <td>Name</td>
+                    <td><input type="text" name="txtname" id="" value="{{doctor.doctor_name}}" title="Name Allows Only Alphabets,Spaces and First Letter Must Be Capital Letter" pattern="^[A-Z]+[a-zA-Z ]*$"  autocomplete="off" required></td>
+                </tr>
+                <tr>
+                    <td>Contact</td>
+                    <td><input type="number" name="txtcon" id="" value="{{doctor.doctor_Contact}}" pattern="[6-9]{1}[0-9]{9}" 
+                        title="Phone number with 6-9 and remaing 9 digit with 0-9" autocomplete="off"></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td><input type="email" name="txtemail" id="" value="{{doctor.doctor_email}}" autocomplete="off" required></td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td><textarea name="txtadd" id=""  autocomplete="off" required>{{doctor.doctor_address}}</textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" name="txtup" value="Update">
+                        <input type="reset" name="txtcan" value="Cancel">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</body>
+</html>
+{% endblock content %}
+

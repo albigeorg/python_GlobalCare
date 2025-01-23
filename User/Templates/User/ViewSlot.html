@@ -1,0 +1,59 @@
+{% extends 'User/Head.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ViewSlot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ccc;
+            width: 20%; /* Each card takes up 20% of the table width */
+        }
+        a.btn {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 4px;
+        }
+        a.btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table border="0" align="center" cellpadding="10">
+            <tr>
+                {% for i in data %}
+                    {% if forloop.counter0|divisibleby:5 and not forloop.first %} <!-- Start a new row after every 5 slots, except for the first row -->
+                        </tr><tr>
+                    {% endif %}
+                    <td>
+                        <a href="{% url 'webuser:Appointment' i.id %}" class="btn">{{ i.slots }}</a>
+                    </td>
+                {% endfor %}
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
+{% endblock content %}

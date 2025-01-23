@@ -1,0 +1,101 @@
+{% extends 'User/Head.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        form {
+            margin-top: 20px;
+            text-align: center;
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        input[type="submit"], input[type="reset"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        input[type="submit"]:hover, input[type="reset"]:hover {
+            background-color: #45a049;
+        }
+        a {
+            color: #337ab7;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+        a:hover {
+            color: #23527c;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table border="0" align="center">
+            <tr>
+                <td>Feedback</td>
+                <td><textarea name="txtfeed" id="" cols="30" rows="10" pattern="[A-Za-z. ]{3,}" autocomplete="off" required>{{adata.feedback_title}}</textarea></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="Save">
+                    <input type="reset" value="Cancel">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <table border="1" align="center" cellpadding="10">
+        <tr>
+            <th>sl.no</th>
+            <th>Feedback</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+        {% for feedback in cdata %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ feedback.feedback_title }}</td>
+            <td>{{ feedback.feedback_date }}</td>
+            <td>
+                <a href="{% url 'webuser:delf' feedback.id %}">Delete</a>
+                <a href="{% url 'webuser:edtf' feedback.id %}">Edit</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+{% endblock content %}

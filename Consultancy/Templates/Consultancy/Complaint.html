@@ -1,0 +1,131 @@
+{% extends 'Consultancy/Head.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"], input[type="reset"] {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        input[type="submit"]:hover, input[type="reset"]:hover {
+            background-color: #2980b9;
+        }
+
+        table.center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div>
+            <table border="1" class="center">
+                <tr>
+                    <td>Title</td>
+                    <td><input type="text" name="txttitle" value="{{ datac.complaint_title }}" pattern="[A-Za-z. ]{3,}" autocomplete="off" required></td>
+                </tr>
+                <tr>
+                    <td>Complaint</td>
+                    <td><textarea name="txtcom" cols="30" rows="10" pattern="[A-Za-z. ]{3,}" autocomplete="off" required>{{ datac.complaint_com }}</textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" value="send">
+                        <input type="reset" value="cancel">
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br><br>
+
+        <table border="1" class="center" cellpadding="10">
+            <tr>
+                <td>sl.no</td>
+                <td>Title</td>
+                <td>Complaint</td>
+                <td>Date</td>
+                <td>Reply</td>
+                <td>Action</td>
+            </tr>
+            {% for i in data %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.complaint_title }}</td>
+                    <td>{{ i.complaint_com }}</td>
+                    <td>{{ i.complaint_date }}</td>
+                    <td>
+                        {% if i.complaint_status == '0' %}
+                            Not Replied
+                        {% else %}
+                            {{ i.complaint_reply }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'webConsultancy:delc' i.id %}">Delete</a>
+                        <a href="{% url 'webConsultancy:edtc' i.id %}">Edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>    
+    </form>
+</body>
+</html>
+{% endblock content %}

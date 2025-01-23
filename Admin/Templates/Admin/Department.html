@@ -1,0 +1,116 @@
+{% extends 'Admin/Head.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        form {
+            max-width: 300px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        input[type="text"], input[type="submit"], input[type="reset"] {
+            padding: 8px;
+            margin: 5px 0;
+            display: block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        input[type="submit"], input[type="reset"] {
+            background-color: #4caf50;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover, input[type="reset"]:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            text-decoration: none;
+            padding: 5px 10px;
+            margin-right: 5px;
+            color: #333;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        a:hover {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td>Department</td>
+                    <td><input type="text" name="txtpart" id="txtpart" value="{{ ddata.Department }}"  title="Name Allows Only Alphabets, Spaces and First Letter Must Be Capital Letter" pattern="^[A-Z]+[a-zA-Z ]*$"  autocomplete="off" required></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" value="Save">
+                        <input type="reset" value="Cancel">
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <table>
+            <tr>
+                <th>Sl.no</th>
+                <th>Department</th>
+                <th>Action</th>
+            </tr>
+            {% for i in pdep %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{i.Department}}</td>
+                    <td>
+                        <a href="{% url 'webadmin:del_department' i.id %}">Delete</a>
+                        <a href="{% url 'webadmin:edit_department' i.id %}">Edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
+{% endblock content %}
